@@ -27,7 +27,7 @@ app.on('ready', () => {
 })
 
 ipcMain.on('executeDataCollectingModule', () => {
-    exec("source/env/bin/python3.8 source/app.py --data True", (error, stdout, stderr) => {
+    exec("python3 source/app.py --data True", (error, stdout, stderr) => {
         if (error) {
             console.log(error)
             return
@@ -41,5 +41,15 @@ ipcMain.on('executeDataCollectingModule', () => {
 })
 
 ipcMain.on('executePredictModule', () => {
-    console.log("Not done yet")
+    exec("python3 src/app.py --predict True", (error, stdout, stderr) => {
+        if (error) {
+            console.log(error)
+            return
+        }
+        if (stderr) {
+            console.log(stderr)
+            return
+        }
+        else console.log("[INFO] Successfully connected to predict module")
+    })
 })
