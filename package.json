@@ -1,0 +1,11 @@
+{
+  "name": "khmer_letters_recognition_on_air",
+  "version": "1.0.0",
+  "description": "",
+  "main": "interface/index.js",
+  "scripts": {
+    "test": "electron ."
+  },
+  "author": "",
+  "license": "ISC"
+}
