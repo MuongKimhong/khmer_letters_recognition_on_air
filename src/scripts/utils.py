@@ -24,7 +24,7 @@ def draw_area(frame, draw_points, color, thickness):
     return frame
 
 
-def draw_options(frame, key_options, font, option_colors):
+def draw_key_options(frame, key_options, font, option_colors):
     # key_options is list of tuples of key options, eg. [("a", "draw or pause"), ("s", "save images")]
 
     # option_colors is the list of color for options and same order as key_options:
@@ -32,7 +32,7 @@ def draw_options(frame, key_options, font, option_colors):
     cv2.putText(frame, f'- Press {key_options[0][0]} to {key_options[0][1]}', 
                (50, 50), font, 1, option_colors[0], 2, cv2.LINE_AA)
     cv2.putText(frame, f'- Press {key_options[1][0]} to {key_options[1][1]}', 
-               (50, 100), font, 1, option_colors[1], 2, cv2.LINE_AA)
+               (600, 50), font, 1, option_colors[1], 2, cv2.LINE_AA)
     return frame
 
 
@@ -53,3 +53,25 @@ def save_image(save_to_path, image, image_name):
     cv2.imwrite(save_to_path + "{}{}.jpg".format(image_name, file_count + 1))
     return {'success': True}
 
+
+def create_white_image(size=[400, 400]):
+    image = np.zeros(size, dtype=np.uint8)
+    image.fill(255)
+    return image
+
+
+def toggle_key_a(capture_drawing_status):
+    if not capture_drawing_status:
+        print("[INFO] Capture drawing")
+        capture_drawing_status = True
+        option_colors  = [(255, 0, 0), (0, 255, 0)]
+    else:
+        print("[INFO] Stop capture drawing")
+        capture_drawing_status = False
+        option_colors  = [(0, 255, 0), (0, 255, 0)]
+    return (capture_drawing_status, option_colors)
+
+
+
+def resize_image(image):
+    pass

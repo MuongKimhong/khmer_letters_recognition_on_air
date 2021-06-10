@@ -1,5 +1,7 @@
 import argparse
 
+from scripts.data_collecting import start_data_collecting_mode
+
 
 def main():
     if arguments['predict'] != 'True' and arguments['data'] != 'True':
@@ -13,6 +15,7 @@ def main():
         print("[INFO] Entering predict mode...")
     else:
         print("[INFO] Entering data collecting mode...")
+        start_data_collecting_mode()
 
 
 if __name__ == '__main__':
