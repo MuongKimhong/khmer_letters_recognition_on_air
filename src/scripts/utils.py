@@ -89,13 +89,44 @@ def toggle_key_a(capture_drawing_status):
     return (capture_drawing_status, option_colors)
 
 
-def save_image():
-    pass 
+def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, capture_status, center_dots):
+    hsv_area  = [draw_area['point1'][1], draw_area['point3'][1], 
+                 draw_area['point1'][0], draw_area['point3'][0]]
+    hsv_frame = cv2.cvtColor(video_frame_clone, cv2.COLOR_BGR2HSV) 
+    blue_mask = find_blue_color(hsv_frame[hsv_area[0]:hsv_area[1], hsv_area[2]:hsv_area[3]], 
+                                video_frame_clone)
+    (contour, _) = cv2.findContours(blue_mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+    # check if any countours were found
+    if len(contour) > 0:
+        contour          = sorted(contour, key=cv2.contourArea, reverse=True)[0]
+        ((x, y), radius) = cv2.minEnclosingCircle(contour)
 
-def clear_drawn_image():
-    pass
+        # draw circle around contour and draw circle only in draw area
+        cv2.circle(video_frame[hsv_area[0]:hsv_area[1], hsv_area[2]:hsv_area[3]], 
+                  (int(x), int(y)), int(radius), (0, 255, 0), 2)
 
+        # Find center of countour
+        moment = cv2.moments(contour)
+        center = [(int(moment['m10'] / moment['m00'])) + 800, (int(moment['m01'] / moment['m00'])) + 100]
+        cv2.circle(video_frame, (center[0], center[1]), 12, (255, 255, 255), -1)
 
-def resize_image(image):
-    pass
+        if capture_status:
+            center_dots.append(center)
+
+        for center_dot in center_dots:
+            if (center_dot[0] > 800 and center_dot[0] < 1200) and (center_dot[1] > 100 and center_dot[1] < 500):
+                # coordinates to draw on white image
+                circle_coordinate_x = center_dot[0] - 800 - 5
+                circle_coordinate_y = center_dot[1] - 100 - 5
+                
+                cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5),
+                                         12, (255, 255, 0), -1)
+                cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
+                                         12, (0, 0, 0), -1)
+    return center_dots
+                    
+
+class ImageProcessing:
+    def __init__(self):
+        pass
