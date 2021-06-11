@@ -24,15 +24,32 @@ def draw_area(frame, draw_points, color, thickness):
     return frame
 
 
-def draw_key_options(frame, key_options, font, option_colors):
+def draw_key_options(position, frame, key_options, font, option_colors):
     # key_options is list of tuples of key options, eg. [("a", "draw or pause"), ("s", "save images")]
 
     # option_colors is the list of color for options and same order as key_options:
     # [(0, 155, 0), (100, 255, 100), ..]
-    cv2.putText(frame, f'- Press {key_options[0][0]} to {key_options[0][1]}', 
-               (50, 50), font, 1, option_colors[0], 2, cv2.LINE_AA)
-    cv2.putText(frame, f'- Press {key_options[1][0]} to {key_options[1][1]}', 
-               (600, 50), font, 1, option_colors[1], 2, cv2.LINE_AA)
+    if position != 'horizontal' and position != 'vertical':
+        exception = '''
+        position argument accepts keyword <horizontal> or <vertical> 
+        but {} was given
+        '''.format(position)
+        raise Exception(exception)
+        
+    if position == 'horizontal':
+        cv2.putText(frame, f'- Press {key_options[0][0]} to {key_options[0][1]}', 
+                   (40, 50), font, 0.8, option_colors[0], 2, cv2.LINE_AA)
+        cv2.putText(frame, f'- Press {key_options[1][0]} to {key_options[1][1]}', 
+                   (480, 50), font, 0.8, option_colors[1], 2, cv2.LINE_AA)
+        cv2.putText(frame, f'- Press {key_options[2][0]} to {key_options[2][1]}',
+                   (900, 50), font, 0.8, option_colors[2], 2, cv2.LINE_AA)
+    elif position == 'vertical':
+        cv2.putText(frame, f'- Press {key_options[0][0]} to {key_options[0][1]}',
+                   (40, 150), font, 0.8, option_colors[0], 2, cv2.LINE_AA)
+        cv2.putText(frame, f'- Press {key_options[1][0]} to {key_options[1][1]}',
+                   (40, 250), font, 0.8, option_colors[1], 2, cv2.LINE_AA)
+        cv2.putText(frame, f'- Press {key_options[2][0]} to {key_options[2][1]}',
+                   (40, 350), font, 0.8, option_colors[2], 2, cv2.LINE_AA)
     return frame
 
 
@@ -64,13 +81,20 @@ def toggle_key_a(capture_drawing_status):
     if not capture_drawing_status:
         print("[INFO] Capture drawing")
         capture_drawing_status = True
-        option_colors  = [(255, 0, 0), (0, 255, 0)]
+        option_colors  = [(255, 0, 0), (0, 255, 0), (0, 255, 0)]
     else:
         print("[INFO] Stop capture drawing")
         capture_drawing_status = False
-        option_colors  = [(0, 255, 0), (0, 255, 0)]
+        option_colors  = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
     return (capture_drawing_status, option_colors)
 
+
+def save_image():
+    pass 
+
+
+def clear_drawn_image():
+    pass
 
 
 def resize_image(image):

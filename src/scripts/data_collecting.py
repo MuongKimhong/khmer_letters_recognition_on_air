@@ -5,7 +5,30 @@ import cv2
 from scripts.utils import *
 
 
+key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
+
+
+def key_s_on_click():
+    print("[INFO] Saving drawn image...")
+    global key_option_colors
+    key_option_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 0)]
+    # save function goes here
+    print("[INFO] Drawn image saved")
+    key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
+
+
+def key_c_on_click():
+    print("[INFO] Clearing drawn image...")
+    global key_option_colors
+    key_option_colors = [(0, 255, 0), (0, 255, 0), (255, 0, 0)]
+    # clear function goes here
+    print("[INFO] Drawn image cleared")
+    key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
+
+
 def start_data_collecting_mode():
+    global key_option_colors
+    
     print("[INFO] Entered data collecting mode...")
     captured_video = cv2.VideoCapture(0)
 
@@ -13,9 +36,9 @@ def start_data_collecting_mode():
             'point1': (800, 100),  'point2': (800, 500), 
             'point3': (1200, 500), 'point4': (1200, 100)
     }
-    key_options = [('a', 'toggle drawing'), ('s', 'save image')]
+    key_options = [('a', 'toggle drawing'), ('s', 'save image'), ('c', 'clear screen')]
     font        = cv2.FONT_HERSHEY_SIMPLEX
-    key_option_colors = [(0, 255, 0), (0, 255, 0)]
+    position    = 'vertical'
 
     capture_drawing_status = False
 
@@ -23,7 +46,7 @@ def start_data_collecting_mode():
         ret, video_frame  = captured_video.read()
         video_frame       = cv2.flip(video_frame, 1)
         video_frame       = draw_area(video_frame, draw_area_points, (0, 255, 0), 6)
-        video_frame       = draw_key_options(video_frame, key_options, font, key_option_colors)
+        video_frame       = draw_key_options(position, video_frame, key_options, font, key_option_colors)
         white_image       = create_white_image()
         video_frame_clone = video_frame.copy()
 
@@ -35,8 +58,12 @@ def start_data_collecting_mode():
             break
         elif key_events == ord('a'):
             capture_drawing_status, key_option_colors = toggle_key_a(capture_drawing_status)
+        elif key_events == ord('s'):
+            key_s_on_click()
+        elif key_events == ord('c'):
+            key_c_on_click()
 
-        cv2.imshow("video", video_frame)
+        cv2.imshow("Data collecting mode", video_frame)
         cv2.imshow("white frame", white_image)
 
     cv2.destroyAllWindows() 
