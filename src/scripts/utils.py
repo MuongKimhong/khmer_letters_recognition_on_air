@@ -111,18 +111,17 @@ def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, captu
         center = [(int(moment['m10'] / moment['m00'])) + 800, (int(moment['m01'] / moment['m00'])) + 100]
         cv2.circle(video_frame, (center[0], center[1]), 12, (255, 255, 255), -1)
 
-        if capture_status:
-            center_dots.append(center)
+        if capture_status: center_dots.append(center)
 
-        for center_dot in center_dots:
-            if (center_dot[0] > 800 and center_dot[0] < 1200) and (center_dot[1] > 100 and center_dot[1] < 500):
-                # coordinates to draw on white image
-                circle_coordinate_x = center_dot[0] - 800 - 5
-                circle_coordinate_y = center_dot[1] - 100 - 5
-                
-                cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5), 12, (255, 255, 0), -1)
-                cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
-                                         12, (0, 0, 0), -1)
+    for center_dot in center_dots:
+        if (center_dot[0] > 800 and center_dot[0] < 1200) and (center_dot[1] > 100 and center_dot[1] < 500):
+            # coordinates to draw on white image
+            circle_coordinate_x = center_dot[0] - 800 - 5
+            circle_coordinate_y = center_dot[1] - 100 - 5
+            
+            cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5), 12, (255, 255, 0), -1)
+            cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
+                                        12, (0, 0, 0), -1)
     return center_dots
                     
 
@@ -147,6 +146,5 @@ class ImageProcessing:
         print(f"[INFO] Saving image into {save_path}")
         # total files inside provided save path
         total_files = len([_file for _file in os.listdir(save_path) if os.path.isfile(save_path + _file)])
-        print(total_files)
         cv2.imwrite(save_path + f"image{total_files + 1}.jpg", resized_image)
         print(f"[INFO] image{total_files + 1}.jpg saved")
