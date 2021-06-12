@@ -7,8 +7,8 @@ def main():
     if arguments['predict'] != 'True' and arguments['data'] != 'True':
         exception_error = '''
         module app.py requires 1 command line argument but 0 was given.
-        -> run < app.py --predict True > to enter predict mode
-        -> run < app.py --data True > to enter data collecting mode
+        -> run < python3 src/app.py --predict True > to enter predict mode
+        -> run < python3 src/app.py --data True > to enter data collecting mode
         '''
         raise Exception(exception_error)
     elif arguments['predict'] == 'True':
