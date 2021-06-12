@@ -27,7 +27,7 @@ app.on('ready', () => {
 })
 
 ipcMain.on('executeDataCollectingModule', () => {
-    exec("python3 source/app.py --data True", (error, stdout, stderr) => {
+    exec("python3 src/app.py --data True", (error, stdout, stderr) => {
         if (error) {
             console.log(error)
             return
