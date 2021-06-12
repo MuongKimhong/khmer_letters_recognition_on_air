@@ -70,4 +70,3 @@ def start_data_collecting_mode():
         cv2.imshow("white frame", white_image)
 
     cv2.destroyAllWindows() 
-    

@@ -53,15 +53,6 @@ def draw_key_options(position, frame, key_options, font, option_colors):
     return frame
 
 
-def draw_save_count(frame, count, coordinate, font, color):
-    # count is the number of count display on screen
-    # coordinate: tuple of coordinate x and y
-    if count is not None:
-        cv2.putText(frame, f'Image {count} saved', 
-                    coordinate, font, 1, color, 2, cv2.LINE_AA)
-    return frame
-
-
 def save_image(save_to_path, image, image_name):
     save_dir   = os.listdir(save_to_path)
     file_count = len([file for file in save_dir if os.path.isfile(file)])   
@@ -123,7 +114,7 @@ def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, captu
             cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
                                         12, (0, 0, 0), -1)
     return center_dots
-                    
+
 
 class ImageProcessing:
     def resize_image(self, image, new_height, new_width):
