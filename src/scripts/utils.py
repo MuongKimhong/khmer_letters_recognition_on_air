@@ -116,6 +116,13 @@ def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, captu
     return center_dots
 
 
+def draw_save_count(save_path, video_frame, font, color):
+    total_images = len([image for image in os.listdir(save_path) if os.path.isfile(save_path + image)])
+    cv2.putText(video_frame, f'{total_images} images saved', (880, 550), font, 0.8, color, 2,
+                cv2.LINE_AA)
+    return video_frame
+
+
 class ImageProcessing:
     def resize_image(self, image, new_height, new_width):
         print("[INFO] Resizing image..")
