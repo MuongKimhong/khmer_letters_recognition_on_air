@@ -146,6 +146,7 @@ class ImageProcessing:
         resized_image = self.resize_image(image, 128, 128) 
         print(f"[INFO] Saving image into {save_path}")
         # total files inside provided save path
-        total_files = len([_file for _file in os.listdir(save_path) if os.path.isfile(_file)])
+        total_files = len([_file for _file in os.listdir(save_path) if os.path.isfile(save_path + _file)])
+        print(total_files)
         cv2.imwrite(save_path + f"image{total_files + 1}.jpg", resized_image)
         print(f"[INFO] image{total_files + 1}.jpg saved")
