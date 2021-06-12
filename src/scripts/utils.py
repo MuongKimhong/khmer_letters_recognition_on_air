@@ -120,13 +120,32 @@ def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, captu
                 circle_coordinate_x = center_dot[0] - 800 - 5
                 circle_coordinate_y = center_dot[1] - 100 - 5
                 
-                cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5),
-                                         12, (255, 255, 0), -1)
+                cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5), 12, (255, 255, 0), -1)
                 cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
                                          12, (0, 0, 0), -1)
     return center_dots
                     
 
 class ImageProcessing:
-    def __init__(self):
-        pass
+    def resize_image(self, image, new_height, new_width):
+        print("[INFO] Resizing image..")
+        height, width = image.shape[:2] 
+        padding_color = 0
+        padding       = {'top': 0, 'bottom': 0, 'left': 0, 'right': 0}
+        interpolation = cv2.INTER_AREA if (height > new_height) or (width > new_width) else cv2.INTER_CUBIC
+
+        if len(image.shape) == 3 and not isinstance(padding_color, (list, tuple, np.ndarray)):
+            padding_color = [padding_color] * 3
+
+        resized_image = cv2.resize(image, (new_width, new_height), interpolation=interpolation)
+        resized_image = cv2.copyMakeBorder(resized_image, padding['top'], padding['bottom'], padding['left'], 
+                                           padding['right'], borderType=cv2.BORDER_CONSTANT, value=padding_color)
+        return resized_image
+
+    def save_image(self, image, save_path):
+        resized_image = self.resize_image(image, 128, 128) 
+        print(f"[INFO] Saving image into {save_path}")
+        # total files inside provided save path
+        total_files = len([_file for _file in os.listdir(save_path) if os.path.isfile(_file)])
+        cv2.imwrite(save_path + f"image{total_files + 1}.jpg", resized_image)
+        print(f"[INFO] image{total_files + 1}.jpg saved")

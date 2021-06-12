@@ -2,3 +2,4 @@ env
 node_modules
 test.py
 __pycache__
+dataset

@@ -9,11 +9,11 @@ key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
 center_dots = []
 
 
-def key_s_on_click():
+def key_s_on_click(image, save_path):
     print("[INFO] Saving drawn image...")
     global key_option_colors
     key_option_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 0)]
-    # save function goes here
+    ImageProcessing().save_image(image, save_path)
     key_c_on_click()
     print("[INFO] Drawn image saved")
     key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
@@ -61,7 +61,8 @@ def start_data_collecting_mode():
         elif key_events == ord('a'):
             capture_drawing_status, key_option_colors = toggle_key_a(capture_drawing_status)
         elif key_events == ord('s'):
-            key_s_on_click()
+            save_path = 'src/dataset/kor/'
+            key_s_on_click(white_image, save_path)
         elif key_events == ord('c'):
             key_c_on_click()
 
