@@ -22,9 +22,8 @@ $ npm start
 You can also run this project directly with python module, To start it, run:
 - For data collecting mode:
 ```
-$ python3 src/app.py --data True
+$ python3 src/app.py --data True --savepath [path to dataset folder]
 ```
-To save images into correct path, make sure you provide path inside <data_collecting.py> line 64.
 
 - For predict mode:
 ```
