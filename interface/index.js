@@ -27,17 +27,25 @@ app.on('ready', () => {
 })
 
 ipcMain.on('executeDataCollectingModule', () => {
-    exec("python3 src/app.py --data True", (error, stdout, stderr) => {
-        if (error) {
-            console.log(error)
-            return
-        }
-        if (stderr) {
-            console.log(stderr)
-            return
-        }
-        else console.log("[INFO] Successfully connected to data collecting module")
+    var dialog = electron.dialog
+    dialog.showOpenDialog(interfaceWindow, {properties: ['openDirectory']})
+    .then((result) => {
+        var folderPath = result.filePaths
+        console.log(folderPath[0])
+        exec(`python3 src/app.py --data True --savepath ${folderPath[0] + '/'}`, (error, stdout, stderr) => {
+            if (error) {
+                console.log(error)
+                return
+            }
+            if (stderr) {
+                console.log(stderr)
+                return
+            }
+            else console.log("[INFO] Successfully connected to data collecting module")
+        })
     })
+
+    
 })
 
 ipcMain.on('executePredictModule', () => {

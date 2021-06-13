@@ -8,10 +8,11 @@
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="background-color: rgb(56, 56, 56);">
     <div class="container mt-5">
         <div class="text-center mt-5">
-            <button id="data-collecting" class="btn btn-success col-4" onclick="enterDataCollectingMode()">Data Collecting Mode</button>
+            <button id="data-collecting" class="btn btn-success col-4" onclick="enterDataCollectingMode()">Data
+                Collecting Mode</button>
         </div>
 
         <div class="text-center my-3">
@@ -24,9 +25,8 @@
         crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        const electron        = require('electron')
+        const electron = require('electron')
         const { ipcRenderer } = electron
-
 
         function enterDataCollectingMode() {
             ipcRenderer.send('executeDataCollectingModule')
