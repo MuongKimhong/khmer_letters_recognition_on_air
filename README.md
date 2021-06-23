@@ -12,23 +12,22 @@ $ pip3 install -r requirements.txt
 **Important** 
 - If you use virtual environment make sure you have it activated
 
-### Run project with welcome interface
-This project uses electron to build welcome interface. To start it, run:
+### Run application with welcome interface
+ElectronJs is used to build welcome interface. To start it, run:
 ```
 $ npm start
 ```
 
-### Run project without welcome interface
-You can also run this project directly with python module, To start it, run:
+### Run application without welcome interface
+You can also run the applicatioj directly with python module, To start it, run:
 - For data collecting mode:
 ```
-$ python3 src/app.py --data True
+$ python3 src/app.py --data True --savepath [path to dataset folder]
 ```
-To save images into correct path, make sure you provide path inside <data_collecting.py> line 64.
 
 - For predict mode:
 ```
 $ python3 src/app.py --predict True
 ```
 
-**This project was tested on MacOS and Ubuntu**
+**This application was tested on MacOS and Ubuntu**
