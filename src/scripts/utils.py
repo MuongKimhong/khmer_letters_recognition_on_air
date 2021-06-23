@@ -1,6 +1,7 @@
 import os
-import numpy as np
 import cv2
+import numpy as np
+from imutils import paths
 
 
 # use blue color to draw on air
@@ -124,6 +125,10 @@ def draw_save_count(save_path, video_frame, font, color):
 
 
 class ImageProcessing:
+    def get_total_files_in_dir(self, dir_path):
+        return len([_file for _file in os.listdir(dir_path) if os.path.isfile(dir_path + _file)])
+
+    # used to resize single image
     def resize_image(self, image, new_height, new_width):
         print("[INFO] Resizing image..")
         height, width = image.shape[:2] 
@@ -139,10 +144,29 @@ class ImageProcessing:
                                            padding['right'], borderType=cv2.BORDER_CONSTANT, value=padding_color)
         return resized_image
 
-    def save_image(self, image, save_path):
-        resized_image = self.resize_image(image, 128, 128) 
+    def save_image(self, image, save_path, image_width=None, image_height=None, resize=True): 
+        if resize: 
+            if (image_width is None) or (image_height is None):
+                raise Exception("resize is set to True but width or height is not given")
+            image = self.resize_image(image, image_width, image_height) 
+
         print(f"[INFO] Saving image into {save_path}")
         # total files inside provided save path
-        total_files = len([_file for _file in os.listdir(save_path) if os.path.isfile(save_path + _file)])
-        cv2.imwrite(save_path + f"image{total_files + 1}.jpg", resized_image)
+        total_files = self.get_total_files_in_dir(save_path)
+        cv2.imwrite(save_path + f"image{total_files + 1}.jpg", image)
         print(f"[INFO] image{total_files + 1}.jpg saved")
+
+    # used to resize images in one directory
+    def resize_images_in_dir(self, dir_path, new_width, new_height):
+        all_images = []
+
+        for (index, image) in enumerate(list(paths.list_images(dir_path))):
+            _image = cv2.imread(image, 0)
+            resized_image = self.resize_image(_image, new_width, new_height)
+            all_images.append(resized_image)
+            # delete old image
+            os.remove(image)
+
+        # save all images from all_images list into save path directory 
+        for image in all_images: self.save_image(image, dir_path, resize=False)
+

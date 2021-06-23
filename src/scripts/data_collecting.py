@@ -13,7 +13,7 @@ def key_s_on_click(image, save_path):
     print("[INFO] Saving drawn image...")
     global key_option_colors
     key_option_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 0)]
-    ImageProcessing().save_image(image, save_path)
+    ImageProcessing().save_image(image, save_path, 64, 64, resize=True)
     key_c_on_click()
     print("[INFO] Drawn image saved")
     key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]

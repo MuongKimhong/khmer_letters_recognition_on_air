@@ -44,8 +44,6 @@ ipcMain.on('executeDataCollectingModule', () => {
             else console.log("[INFO] Successfully connected to data collecting module")
         })
     })
-
-    
 })
 
 ipcMain.on('executePredictModule', () => {
