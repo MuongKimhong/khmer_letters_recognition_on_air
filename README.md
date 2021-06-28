@@ -19,7 +19,7 @@ $ npm start
 ```
 
 ### Run application without welcome interface
-You can also run the applicatioj directly with python module, To start it, run:
+You can also run the application directly with python module, To start it, run:
 - For data collecting mode:
 ```
 $ python3 src/app.py --data True --savepath [path to dataset folder]
