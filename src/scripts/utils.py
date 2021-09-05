@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 from imutils import paths
+from tensorflow.keras.preprocessing.image import img_to_array
 
 
 # use blue color to draw on air
@@ -81,7 +82,23 @@ def toggle_key_a(capture_drawing_status):
     return (capture_drawing_status, option_colors)
 
 
-def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, capture_status, center_dots):
+def drawing_on_air(
+    video_frame, 
+    video_frame_clone, 
+    white_image, 
+    white_image1, 
+    white_image2, 
+    white_image3, 
+    white_image4, 
+    white_image5,
+    white_image6, 
+    white_image7,
+    white_image8,
+    white_image9,
+    draw_area, 
+    capture_status, 
+    center_dots
+    ):
     hsv_area  = [draw_area['point1'][1], draw_area['point3'][1], 
                  draw_area['point1'][0], draw_area['point3'][0]]
     hsv_frame = cv2.cvtColor(video_frame_clone, cv2.COLOR_BGR2HSV) 
@@ -114,6 +131,24 @@ def drawing_on_air(video_frame, video_frame_clone, white_image, draw_area, captu
             cv2.circle(video_frame, (center_dot[0] - 5, center_dot[1] - 5), 12, (255, 255, 0), -1)
             cv2.circle(white_image, (circle_coordinate_x, circle_coordinate_y),
                                         12, (0, 0, 0), -1)
+            cv2.circle(white_image1, (circle_coordinate_x - 50, circle_coordinate_y - 45),
+                                        10, (0, 0, 0), -1)
+            cv2.circle(white_image6, (circle_coordinate_x + 59, circle_coordinate_y + 69),
+                                        8, (0, 0, 0), -1)                           
+            cv2.circle(white_image7, (circle_coordinate_x, circle_coordinate_y + 74),
+                                        10, (0, 0, 0), -1) 
+            cv2.circle(white_image2, (circle_coordinate_x - 55, circle_coordinate_y + 20),
+                                        17, (0, 0, 0), -1)
+            cv2.circle(white_image3, (circle_coordinate_x + 58, circle_coordinate_y + 48),
+                                        12, (0, 0, 0), -1)
+            cv2.circle(white_image4, (circle_coordinate_x + 110, circle_coordinate_y),
+                                        19, (0, 0, 0), -1)
+            cv2.circle(white_image5, (circle_coordinate_x - 30, circle_coordinate_y - 45),
+                                        16, (0, 0, 0), -1)
+            cv2.circle(white_image8, (circle_coordinate_x + 124, circle_coordinate_y),
+                                        10, (0, 0, 0), -1)
+            cv2.circle(white_image9, (circle_coordinate_x + 54, circle_coordinate_y + 74),
+                                        10, (0, 0, 0), -1) 
     return center_dots
 
 
@@ -169,4 +204,28 @@ class ImageProcessing:
 
         # save all images from all_images list into save path directory 
         for image in all_images: self.save_image(image, dir_path, resize=False)
+
+
+def dataset_loader(image_paths, shape):
+    # shape = (400, 128, 128) (number of images, width, height, channels)
+    images = np.empty(shape, dtype='uint8')
+    image_labels = []
+
+    # turn all image paths into python list
+    image_paths = list(paths.list_images(image_paths))
+
+    '''
+    image paths example: "../khmer_letter_dataset/khmer_letters_air/letters/"
+    '''
+
+    for (index, image_path) in enumerate(image_paths):
+        print(f"[INFO] loading image {index + 1}/{len(image_paths)} into memory")
+
+        image = cv2.imread(image_path, 0)
+        image = img_to_array(image)
+        image_label = image_path.split(os.path.sep)[-2]
+        image_labels.append(image_label)
+        images[index] = image
+
+    return (images, np.array(image_labels))
 

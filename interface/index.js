@@ -26,12 +26,19 @@ app.on('ready', () => {
     }))
 })
 
-ipcMain.on('executeDataCollectingModule', () => {
+ipcMain.on('executeDataCollectingModule', (event) => {
     var dialog = electron.dialog
     dialog.showOpenDialog(interfaceWindow, {properties: ['openDirectory']})
     .then((result) => {
         var folderPath = result.filePaths
         console.log(folderPath[0])
+
+        event.reply('startingDataCollectingModule')
+
+        setTimeout(() => {
+            event.reply('successRunningDataCollectingModule')
+        }, 7000)
+
         exec(`python3 src/app.py --data True --savepath ${folderPath[0] + '/'}`, (error, stdout, stderr) => {
             if (error) {
                 console.log(error)
@@ -41,7 +48,9 @@ ipcMain.on('executeDataCollectingModule', () => {
                 console.log(stderr)
                 return
             }
-            else console.log("[INFO] Successfully connected to data collecting module")
+            else {
+                event.reply('stopDataCollectingModule')
+            } 
         })
     })
 })

@@ -51,8 +51,31 @@ def start_data_collecting_mode(save_path):
         video_frame       = draw_save_count(save_path, video_frame, font, (255, 255, 0))
         video_frame_clone = video_frame.copy()
         white_image       = create_white_image()
-        center_dots       = drawing_on_air(video_frame, video_frame_clone, white_image, draw_area_points,
-                                           capture_drawing_status, center_dots)
+        white_image1       = create_white_image()
+        white_image2       = create_white_image()
+        white_image3       = create_white_image()
+        white_image4       = create_white_image()
+        white_image5       = create_white_image()
+        white_image6       = create_white_image()
+        white_image7       = create_white_image()
+        white_image8       = create_white_image()
+        white_image9       = create_white_image()
+        center_dots       = drawing_on_air(
+            video_frame, 
+            video_frame_clone, 
+            white_image, 
+            white_image1,
+            white_image2,
+            white_image3,
+            white_image4,
+            white_image5,
+            white_image6,
+            white_image7,
+            white_image8,
+            white_image9,
+            draw_area_points,
+            capture_drawing_status, center_dots
+        )
         key_events = cv2.waitKey(1) & 0xFF
 
         if key_events == ord('q'):
@@ -66,5 +89,14 @@ def start_data_collecting_mode(save_path):
 
         cv2.imshow("Data collecting mode", video_frame)
         cv2.imshow("white frame", white_image)
+        cv2.imshow("white frame1", white_image1)
+        cv2.imshow("white frame2", white_image2)
+        cv2.imshow("white frame3", white_image3)
+        cv2.imshow("white frame4", white_image4)
+        cv2.imshow("white frame5", white_image5)
+        cv2.imshow("white frame6", white_image6)
+        cv2.imshow("white frame7", white_image7)
+        cv2.imshow("white frame8", white_image8)
+        cv2.imshow("white frame9", white_image9)
 
     cv2.destroyAllWindows() 
