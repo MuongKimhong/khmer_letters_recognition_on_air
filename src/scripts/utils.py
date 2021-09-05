@@ -179,17 +179,18 @@ class ImageProcessing:
                                            padding['right'], borderType=cv2.BORDER_CONSTANT, value=padding_color)
         return resized_image
 
-    def save_image(self, image, save_path, image_width=None, image_height=None, resize=True): 
-        if resize: 
-            if (image_width is None) or (image_height is None):
-                raise Exception("resize is set to True but width or height is not given")
-            image = self.resize_image(image, image_width, image_height) 
+    def save_image(self, images_to_save, save_path, image_width=None, image_height=None, resize=True): 
+        for image in images_to_save:
+            if resize: 
+                if (image_width is None) or (image_height is None):
+                    raise Exception("resize is set to True but width or height is not given")
+                image = self.resize_image(image, image_width, image_height) 
 
-        print(f"[INFO] Saving image into {save_path}")
-        # total files inside provided save path
-        total_files = self.get_total_files_in_dir(save_path)
-        cv2.imwrite(save_path + f"image{total_files + 1}.jpg", image)
-        print(f"[INFO] image{total_files + 1}.jpg saved")
+            print(f"[INFO] Saving image into {save_path}")
+            # total files inside provided save path
+            total_files = self.get_total_files_in_dir(save_path)
+            cv2.imwrite(save_path + f"image{total_files + 1}.jpg", image)
+            print(f"[INFO] image{total_files + 1}.jpg saved")
 
     # used to resize images in one directory
     def resize_images_in_dir(self, dir_path, new_width, new_height):

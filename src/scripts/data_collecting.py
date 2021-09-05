@@ -5,15 +5,15 @@ import cv2
 from scripts.utils import *
 
 
-key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
+key_option_colors = [(9, 199, 9), (9, 199, 9), (9, 199, 9)]
 center_dots = []
 
 
-def key_s_on_click(image, save_path):
+def key_s_on_click(images_to_save, save_path):
     print("[INFO] Saving drawn image...")
     global key_option_colors
     key_option_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 0)]
-    ImageProcessing().save_image(image, save_path, 64, 64, resize=True)
+    ImageProcessing().save_image(images_to_save, save_path, 64, 64, resize=True)
     key_c_on_click()
     print("[INFO] Drawn image saved")
     key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
@@ -78,25 +78,21 @@ def start_data_collecting_mode(save_path):
         )
         key_events = cv2.waitKey(1) & 0xFF
 
+        images_to_save = [
+            white_image, white_image1, white_image2, white_image3, white_image4, white_image5,
+            white_image6, white_image7, white_image8, white_image9
+        ]
+
         if key_events == ord('q'):
             print("[INFO] Exiting data collecting mode...")
             print("[INFO] Closed")
             break
         elif key_events == ord('a'): 
             capture_drawing_status, key_option_colors = toggle_key_a(capture_drawing_status)
-        elif key_events == ord('s'): key_s_on_click(white_image, save_path)
+        elif key_events == ord('s'): key_s_on_click(images_to_save, save_path)
         elif key_events == ord('c'): key_c_on_click()
 
         cv2.imshow("Data collecting mode", video_frame)
         cv2.imshow("white frame", white_image)
-        cv2.imshow("white frame1", white_image1)
-        cv2.imshow("white frame2", white_image2)
-        cv2.imshow("white frame3", white_image3)
-        cv2.imshow("white frame4", white_image4)
-        cv2.imshow("white frame5", white_image5)
-        cv2.imshow("white frame6", white_image6)
-        cv2.imshow("white frame7", white_image7)
-        cv2.imshow("white frame8", white_image8)
-        cv2.imshow("white frame9", white_image9)
 
     cv2.destroyAllWindows() 
