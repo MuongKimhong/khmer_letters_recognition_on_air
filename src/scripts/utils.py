@@ -166,6 +166,7 @@ class ImageProcessing:
 
     # used to resize images in one directory
     def resize_images_in_dir(self, dir_path, new_width, new_height):
+        print(new_width, new_height)
         all_images = []
 
         for (index, image) in enumerate(list(paths.list_images(dir_path))):

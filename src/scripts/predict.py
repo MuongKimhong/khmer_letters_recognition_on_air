@@ -33,8 +33,8 @@ def key_c_on_click():
 def key_p_on_click(model_path, images_to_save, save_path):
     global label
 
-    class_labels = ['1_kor', '2_khor', '3_kur', '4_khur', '5_ngor', '6_chor', '7_chhor', '8_cher', '9_chher', '10_nger',
-                    '11_dor', '12_thhor', '13_der', '14_ther', '15_nor', '16_thor', '17_tor', '18_thear', '19_thher',
+    class_labels = ['ក', 'ខ', 'kur', 'khur', 'ngor', 'chor', 'chhor', 'jur', 'chhur', 'nhur',
+                    'dor', 'thhor', 'dur', 'thur', 'nur', 'tor', 'thor', '', '19_thher',
                     '20_ner', '21_bor', '22_phor', '23_por', '24_pher', '25_mer', '26_yer', '27_ror', '28_lor', '29_vor', 
                     '30_sor', '31_hor', '32_lorl', '33_r']
     
