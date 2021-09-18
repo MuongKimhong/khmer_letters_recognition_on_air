@@ -13,7 +13,7 @@ def key_s_on_click(images_to_save, save_path):
     print("[INFO] Saving drawn image...")
     global key_option_colors
     key_option_colors = [(0, 255, 0), (255, 0, 0), (0, 255, 0)]
-    ImageProcessing().save_image(images_to_save, save_path, 64, 64, resize=True)
+    ImageProcessing().save_image(images_to_save, save_path, 128, 128, resize=True)
     key_c_on_click()
     print("[INFO] Drawn image saved")
     key_option_colors = [(0, 255, 0), (0, 255, 0), (0, 255, 0)]
@@ -51,37 +51,17 @@ def start_data_collecting_mode(save_path):
         video_frame       = draw_save_count(save_path, video_frame, font, (255, 255, 0))
         video_frame_clone = video_frame.copy()
         white_image       = create_white_image()
-        white_image1       = create_white_image()
-        white_image2       = create_white_image()
-        white_image3       = create_white_image()
-        white_image4       = create_white_image()
-        white_image5       = create_white_image()
-        white_image6       = create_white_image()
-        white_image7       = create_white_image()
-        white_image8       = create_white_image()
-        white_image9       = create_white_image()
-        center_dots       = drawing_on_air(
+        center_dots        = drawing_on_air(
             video_frame, 
             video_frame_clone, 
-            white_image, 
-            white_image1,
-            white_image2,
-            white_image3,
-            white_image4,
-            white_image5,
-            white_image6,
-            white_image7,
-            white_image8,
-            white_image9,
             draw_area_points,
-            capture_drawing_status, center_dots
+            capture_drawing_status, 
+            center_dots,
+            white_image
         )
         key_events = cv2.waitKey(1) & 0xFF
 
-        images_to_save = [
-            white_image, white_image1, white_image2, white_image3, white_image4, white_image5,
-            white_image6, white_image7, white_image8, white_image9
-        ]
+        images_to_save = [white_image]
 
         if key_events == ord('q'):
             print("[INFO] Exiting data collecting mode...")

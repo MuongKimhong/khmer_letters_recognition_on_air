@@ -55,16 +55,29 @@ ipcMain.on('executeDataCollectingModule', (event) => {
     })
 })
 
-ipcMain.on('executePredictModule', () => {
-    exec("python3 src/app.py --predict True", (error, stdout, stderr) => {
-        if (error) {
+ipcMain.on('executePredictModule', (event) => {
+    var dialog = electron.dialog
+    dialog.showOpenDialog(interfaceWindow, { properties: ['openFile'] }).then((result) => {
+      if (result.canceled == false) {
+        var folderPath = result.filePaths[0]
+        console.log(folderPath)
+        event.reply('startingPredictModule')
+        setTimeout(() => {
+          event.reply('successRunningPredictModule')
+        }, 7000)
+        exec(`python3 src/app.py --predict True --modelpath ${folderPath}`, (error, stdout, stderr) => {
+          if (error) {
             console.log(error)
             return
-        }
-        if (stderr) {
+          }
+          if (stderr) {
             console.log(stderr)
             return
-        }
-        else console.log("[INFO] Successfully connected to predict module")
+          } else {
+            event.reply('stopPredictModule')
+          }
+        })
+      }
+      
     })
 })
